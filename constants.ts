@@ -1,4 +1,4 @@
-import { AlertLog, Camera, ChartData } from './types';
+import { AlertLog, Camera, ChartData, WeeklyData } from './types';
 
 export const CAMERAS: Camera[] = [
   {
@@ -6,44 +6,52 @@ export const CAMERAS: Camera[] = [
     name: 'Park Zone A - North',
     status: 'alert', // Simulating active alert
     location: 'Central Park',
-    thumbnailUrl: 'https://picsum.photos/seed/park1/800/450',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=800&auto=format&fit=crop',
   },
   {
     id: 'CAM-02',
     name: 'Industrial Dist. Gate 4',
     status: 'online',
     location: 'Sector 7',
-    thumbnailUrl: 'https://picsum.photos/seed/factory1/800/450',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1565793298595-6a879b1d9492?q=80&w=800&auto=format&fit=crop',
   },
   {
     id: 'CAM-03',
     name: 'Residential Block C',
     status: 'online',
     location: 'Downtown',
-    thumbnailUrl: 'https://picsum.photos/seed/city1/800/450',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=800&auto=format&fit=crop',
   },
   {
     id: 'CAM-04',
     name: 'Waste Management Facility',
     status: 'offline',
     location: 'Outskirts',
-    thumbnailUrl: 'https://picsum.photos/seed/waste/800/450',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=800&auto=format&fit=crop',
   },
 ];
 
 export const RECENT_ALERTS: AlertLog[] = [
-  { id: 'AL-1023', timestamp: '10:42 AM', location: 'Park Zone A', type: 'Smoke', confidence: 98, status: 'Sent' },
-  { id: 'AL-1022', timestamp: '09:15 AM', location: 'Industrial Dist.', type: 'Fire', confidence: 92, status: 'Sent' },
-  { id: 'AL-1021', timestamp: 'Yesterday', location: 'Residential Block C', type: 'Smoke', confidence: 88, status: 'Sent' },
-  { id: 'AL-1020', timestamp: 'Yesterday', location: 'Park Zone A', type: 'Smoke', confidence: 75, status: 'Pending' },
+  { id: 'AL-1023', timestamp: '10:42 AM', location: 'Park Zone A', type: 'Smoke', severity: 'High', confidence: 98, status: 'Sent', imageUrl: 'https://images.unsplash.com/photo-1626573860472-a0a3826019a3?q=80&w=800&auto=format&fit=crop' },
+  { id: 'AL-1022', timestamp: '09:15 AM', location: 'Industrial Dist.', type: 'Fire', severity: 'High', confidence: 92, status: 'Sent', imageUrl: 'https://images.unsplash.com/photo-1542461927-9481923cb411?q=80&w=800&auto=format&fit=crop' },
+  { id: 'AL-1021', timestamp: 'Yesterday', location: 'Residential Block C', type: 'Smoke', severity: 'Medium', confidence: 88, status: 'Sent' },
+  { id: 'AL-1020', timestamp: 'Yesterday', location: 'Park Zone A', type: 'Smoke', severity: 'Low', confidence: 75, status: 'Pending' },
+  { id: 'AL-1019', timestamp: '2 days ago', location: 'Riverside Walk', type: 'Fire', severity: 'Medium', confidence: 82, status: 'Failed' },
 ];
 
-export const AIR_QUALITY_DATA: ChartData[] = [
-  { time: '06:00', value: 45 },
-  { time: '08:00', value: 65 },
-  { time: '10:00', value: 120 }, // Spike due to simulated burning
-  { time: '12:00', value: 90 },
-  { time: '14:00', value: 55 },
-  { time: '16:00', value: 40 },
-  { time: '18:00', value: 42 },
+export const WEEKLY_ALERTS_DATA: WeeklyData[] = [
+  { day: 'Mon', alerts: 4 },
+  { day: 'Tue', alerts: 7 },
+  { day: 'Wed', alerts: 3 },
+  { day: 'Thu', alerts: 8 },
+  { day: 'Fri', alerts: 5 },
+  { day: 'Sat', alerts: 12 },
+  { day: 'Sun', alerts: 9 },
+];
+
+export const POLLUTION_BY_DISTRICT_DATA: ChartData[] = [
+  { name: 'Industrial', value: 45, fill: '#EF4444' }, // Red
+  { name: 'Residential', value: 25, fill: '#F59E0B' }, // Orange
+  { name: 'Parks', value: 15, fill: '#10B981' }, // Green
+  { name: 'Outskirts', value: 15, fill: '#3B82F6' }, // Blue
 ];

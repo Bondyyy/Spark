@@ -11,11 +11,19 @@ export interface AlertLog {
   timestamp: string;
   location: string;
   type: 'Smoke' | 'Fire';
+  severity: 'High' | 'Medium' | 'Low';
   confidence: number;
   status: 'Sent' | 'Pending' | 'Failed';
+  imageUrl?: string;
 }
 
 export interface ChartData {
-  time: string;
+  name: string;
   value: number;
+  fill?: string;
+}
+
+export interface WeeklyData {
+  day: string;
+  alerts: number;
 }
