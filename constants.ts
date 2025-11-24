@@ -6,34 +6,34 @@ export const CAMERAS: Camera[] = [
     name: 'Park Zone A - North',
     status: 'alert', // Simulating active alert
     location: 'Central Park',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=800&auto=format&fit=crop',
+    thumbnailUrl: 'https://placehold.co/640x360/333333/FFFFFF?text=CAM-01+Park+Zone+A',
   },
   {
     id: 'CAM-02',
     name: 'Industrial Dist. Gate 4',
     status: 'online',
     location: 'Sector 7',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1565793298595-6a879b1d9492?q=80&w=800&auto=format&fit=crop',
+    thumbnailUrl: 'https://placehold.co/640x360/222222/FFFFFF?text=CAM-02+Industrial+Gate',
   },
   {
     id: 'CAM-03',
     name: 'Residential Block C',
     status: 'online',
     location: 'Downtown',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=800&auto=format&fit=crop',
+    thumbnailUrl: 'https://placehold.co/640x360/444444/FFFFFF?text=CAM-03+Residential+Block',
   },
   {
     id: 'CAM-04',
     name: 'Waste Management Facility',
     status: 'offline',
     location: 'Outskirts',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=800&auto=format&fit=crop',
+    thumbnailUrl: 'https://placehold.co/640x360/111111/FFFFFF?text=CAM-04+Waste+Mgmt+(Offline)',
   },
 ];
 
 export const RECENT_ALERTS: AlertLog[] = [
-  { id: 'AL-1023', timestamp: '10:42 AM', location: 'Park Zone A', type: 'Smoke', severity: 'High', confidence: 98, status: 'Sent', imageUrl: 'https://images.unsplash.com/photo-1626573860472-a0a3826019a3?q=80&w=800&auto=format&fit=crop' },
-  { id: 'AL-1022', timestamp: '09:15 AM', location: 'Industrial Dist.', type: 'Fire', severity: 'High', confidence: 92, status: 'Sent', imageUrl: 'https://images.unsplash.com/photo-1542461927-9481923cb411?q=80&w=800&auto=format&fit=crop' },
+  { id: 'AL-1023', timestamp: '10:42 AM', location: 'Park Zone A', type: 'Smoke', severity: 'High', confidence: 98, status: 'Sent', imageUrl: 'https://placehold.co/800x600/EF4444/FFFFFF?text=High+Severity+Smoke+Detection' },
+  { id: 'AL-1022', timestamp: '09:15 AM', location: 'Industrial Dist.', type: 'Fire', severity: 'High', confidence: 92, status: 'Sent', imageUrl: 'https://placehold.co/800x600/F59E0B/FFFFFF?text=Fire+Detection+Evidence' },
   { id: 'AL-1021', timestamp: 'Yesterday', location: 'Residential Block C', type: 'Smoke', severity: 'Medium', confidence: 88, status: 'Sent' },
   { id: 'AL-1020', timestamp: 'Yesterday', location: 'Park Zone A', type: 'Smoke', severity: 'Low', confidence: 75, status: 'Pending' },
   { id: 'AL-1019', timestamp: '2 days ago', location: 'Riverside Walk', type: 'Fire', severity: 'Medium', confidence: 82, status: 'Failed' },

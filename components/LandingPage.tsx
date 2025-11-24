@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ShieldCheck, Zap, Server, Eye, CheckCircle, ArrowRight, PlayCircle, Globe, Database, Users, Menu, X, Activity, AlertTriangle, CloudFog, BarChart3, BellRing, Video, ChevronRight, ChevronLeft, Quote, Map, Mail, Phone, Linkedin, MapPin as MapPinIcon, Star } from 'lucide-react';
+import { ShieldCheck, Zap, Server, Eye, CheckCircle, ArrowRight, PlayCircle, Globe, Menu, X, Activity, AlertTriangle, BarChart3, Video, MapPin as MapPinIcon, Star, Linkedin, Mail, Phone, Map, Quote, Send } from 'lucide-react';
 
 interface LandingPageProps {
   onLogin: () => void;
@@ -23,17 +23,17 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
 
   const slides = [
     {
-      url: "https://images.unsplash.com/photo-1611273426761-54c981458147?q=80,w=1000",
+      url: "https://placehold.co/1200x600/333333/FFFFFF?text=Industrial+Emissions+Zone+B",
       title: "Industrial Emissions",
       location: "Zone B - 08:30 AM"
     },
     {
-      url: "https://images.unsplash.com/photo-1596464522434-d02241604169?q=80,w=1000",
+      url: "https://placehold.co/1200x600/555555/FFFFFF?text=Illegal+Waste+Burning+District+9",
       title: "Illegal Waste Burning",
       location: "District 9 - 10:15 PM"
     },
     {
-      url: "https://images.unsplash.com/photo-1550479023-2a811e19dfd3?q=80,w=1000",
+      url: "https://placehold.co/1200x600/777777/FFFFFF?text=Urban+Traffic+Smog+City+Center",
       title: "Urban Traffic Smog",
       location: "City Center - Rush Hour"
     }
@@ -157,13 +157,22 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
     }
   };
 
+  // --- NAVIGATION REFACTOR ---
   const navLinks = [
-    { name: 'Features', href: '#features' },
-    { name: 'How it Works', href: '#how-it-works' },
-    { name: 'Pricing', href: '#pricing' },
-    { name: 'Team', href: '#team' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Features', id: 'features' },
+    { name: 'How it Works', id: 'how-it-works' },
+    { name: 'Pricing', id: 'pricing' },
+    { name: 'Team', id: 'team' },
+    { name: 'Contact', id: 'contact' }
   ];
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-light font-sans selection:bg-primary/20">
@@ -178,7 +187,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
           <div className="relative flex justify-between items-center h-16">
             
             {/* Left: Logo */}
-            <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer z-50">
+            <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer z-50" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <div className="bg-primary text-white p-2 rounded-lg shadow-lg shadow-primary/30">
                 <ShieldCheck className="h-6 w-6" />
               </div>
@@ -190,14 +199,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
             {/* Center: Navigation Links (Absolute Centering) */}
             <div className="hidden md:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 items-center gap-8 lg:gap-12">
               {navLinks.map((item) => (
-                <a 
+                <button 
                   key={item.name}
-                  href={item.href}
-                  className="text-sm font-medium text-slate-600 hover:text-primary transition-colors relative group whitespace-nowrap"
+                  onClick={() => scrollToSection(item.id)}
+                  className="text-sm font-medium text-slate-600 hover:text-primary transition-colors relative group whitespace-nowrap bg-transparent border-none cursor-pointer"
                 >
                   {item.name}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
-                </a>
+                </button>
               ))}
             </div>
 
@@ -233,14 +242,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
           isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
         }`}>
             {navLinks.map((item) => (
-              <a 
+              <button 
                 key={item.name}
-                href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-2xl font-bold text-slate-800 hover:text-primary"
+                onClick={() => scrollToSection(item.id)}
+                className="text-2xl font-bold text-slate-800 hover:text-primary bg-transparent border-none cursor-pointer"
               >
                 {item.name}
-              </a>
+              </button>
             ))}
              <button
                 onClick={() => {
@@ -271,12 +279,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
                 <h1 className="text-5xl lg:text-7xl font-extrabold text-dark tracking-tight mb-6 leading-[1.1]">
                   AI-Powered <br className="hidden lg:block"/>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-600">
-                    Clean Air Defense
+                    Illegal Waste Burning Detection
                   </span>
                 </h1>
                 
                 <p className="mt-4 text-xl text-slate-500 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                  Instantly detect illegal waste burning with existing city cameras. Protect urban air quality with real-time monitoring and automated alerts.
+                  Protecting Urban Air Quality with Real-time Monitoring & Instant Telegram Alerts.
                 </p>
                 
                 <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -284,12 +292,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
                     onClick={onLogin}
                     className="px-8 py-4 bg-primary hover:bg-primaryDark text-white font-bold rounded-xl shadow-lg hover:shadow-primary/30 transition-all flex items-center justify-center gap-2"
                   >
-                    Get Started Free
+                    Get Started
                     <ArrowRight className="w-5 h-5" />
                   </button>
-                  <button className="px-8 py-4 bg-white hover:bg-gray-50 text-slate-700 font-semibold rounded-xl border border-gray-200 shadow-sm transition-all flex items-center justify-center gap-2">
+                  <button 
+                    onClick={() => scrollToSection('how-it-works')}
+                    className="px-8 py-4 bg-white hover:bg-gray-50 text-slate-700 font-semibold rounded-xl border border-gray-200 shadow-sm transition-all flex items-center justify-center gap-2"
+                  >
                     <PlayCircle className="w-5 h-5 text-gray-400" />
-                    Live Demo
+                    Watch Demo
                   </button>
                 </div>
                 
@@ -307,7 +318,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
 
                   <div className="relative z-10 p-8">
                       <img
-                          src="https://images.unsplash.com/photo-1579762145710-bbef99291b5c?q=80&w=1000"
+                          src="https://placehold.co/1200x600/10B981/FFFFFF?text=Clean+Air+Sentinel+Hero"
                           alt="AI data processing"
                           loading="lazy"
                           className="w-full h-auto max-w-[600px] object-contain rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-500"
@@ -332,7 +343,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
             {/* Left Column: Image Carousel */}
-            {/* Mobile: Reduced height (h-72), Desktop: Full height (lg:h-[500px]) */}
             <div className="relative group rounded-3xl overflow-hidden shadow-2xl h-72 md:h-96 lg:h-[500px]">
               {/* Slides */}
               {slides.map((slide, index) => (
@@ -398,36 +408,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
               </div>
             </div>
           </div>
-
-          {/* Statistics Bar (Stacked on Mobile, Row on Desktop) */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-12">
-            <div className="text-center p-6 bg-white rounded-2xl border border-red-100 shadow-sm hover:shadow-md transition-shadow">
-               <h4 className="text-4xl md:text-5xl font-extrabold text-red-600 mb-2">9M+</h4>
-               <p className="text-slate-600 font-medium">Premature Deaths/Year</p>
-            </div>
-            <div className="text-center p-6 bg-white rounded-2xl border border-orange-100 shadow-sm hover:shadow-md transition-shadow">
-               <h4 className="text-4xl md:text-5xl font-extrabold text-orange-500 mb-2">30%</h4>
-               <p className="text-slate-600 font-medium">Rise in Respiratory Issues</p>
-            </div>
-            <div className="text-center p-6 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
-               <h4 className="text-4xl md:text-5xl font-extrabold text-slate-800 mb-2">$5B+</h4>
-               <p className="text-slate-600 font-medium">Annual Economic Loss</p>
-            </div>
-          </div>
-
-          {/* Subtle CTA Link */}
-          <div className="mt-10 text-center">
-            <a 
-              href="#how-it-works" 
-              className="group inline-flex items-center gap-1 text-primary font-medium italic hover:text-primaryDark transition-colors border-b border-primary"
-            >
-              See how we detect these hazards in real-time <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-            </a>
-          </div>
         </div>
       </section>
 
-      {/* Features Grid (Moved Down) */}
+      {/* Features Grid */}
       <section id="features" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-20">
@@ -440,24 +424,24 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
               <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform">
                 <Eye className="w-7 h-7 text-blue-600" />
               </div>
-              <h3 className="text-xl font-bold text-dark mb-3">Computer Vision</h3>
-              <p className="text-slate-500 leading-relaxed">Proprietary YOLOv8 model trained on 50,000+ images of urban waste burning. Filters out fog, steam, and vehicle exhaust with 99% accuracy.</p>
+              <h3 className="text-xl font-bold text-dark mb-3">AI Deep Learning</h3>
+              <p className="text-slate-500 leading-relaxed">Uses YOLOv8 to detect smoke/fire in noisy urban environments.</p>
             </div>
             
             <div className="group bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-orange-200 hover:shadow-xl hover:shadow-orange-500/5 transition-all duration-300 transform hover:-translate-y-1">
               <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform">
                 <Zap className="w-7 h-7 text-orange-500" />
               </div>
-              <h3 className="text-xl font-bold text-dark mb-3">Instant Dispatch</h3>
-              <p className="text-slate-500 leading-relaxed">Don't wait for citizen reports. Authorities receive Telegram/SMS alerts with location pins and image proof within 10 seconds of detection.</p>
+              <h3 className="text-xl font-bold text-dark mb-3">Real-time Alerts</h3>
+              <p className="text-slate-500 leading-relaxed">Instant notifications via Telegram with images.</p>
             </div>
             
             <div className="group bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-green-200 hover:shadow-xl hover:shadow-green-500/5 transition-all duration-300 transform hover:-translate-y-1">
               <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform">
                 <Server className="w-7 h-7 text-primary" />
               </div>
-              <h3 className="text-xl font-bold text-dark mb-3">Hardware Agnostic</h3>
-              <p className="text-slate-500 leading-relaxed">Zero hardware investment. Our lightweight edge gateway software connects to any RTSP/ONVIF camera stream you already own.</p>
+              <h3 className="text-xl font-bold text-dark mb-3">No New Hardware</h3>
+              <p className="text-slate-500 leading-relaxed">Works with existing CCTV (RTSP/ONVIF). 100% Software solution.</p>
             </div>
           </div>
         </div>
@@ -472,14 +456,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
           </div>
           
           <div className="relative">
-            {/* Connecting Line (Desktop) */}
             <div className="hidden md:block absolute top-[2.5rem] left-[16%] right-[16%] h-0.5 bg-slate-200 z-0"></div>
-            
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
               {[
-                  { id: 1, title: 'Connect Streams', text: 'Securely link your existing CCTV/IP cameras via RTSP. No new hardware needed.', icon: <Video className="w-6 h-6 text-blue-600" /> },
-                  { id: 2, title: 'AI Analysis', text: 'Our YOLOv8 model scans feeds in real-time, detecting smoke signatures and fire patterns.', icon: <Eye className="w-6 h-6 text-primary" /> },
-                  { id: 3, title: 'Instant Alert', text: 'Authorities receive immediate notifications with location data and visual proof.', icon: <BellRing className="w-6 h-6 text-orange-500" /> }
+                  { id: 1, title: 'Connect Cameras', text: 'Connect existing cameras via RTSP.', icon: <Video className="w-6 h-6 text-blue-600" /> },
+                  { id: 2, title: 'AI Analysis', text: 'AI analyzes video stream 24/7.', icon: <Eye className="w-6 h-6 text-primary" /> },
+                  { id: 3, title: 'Instant Alert', text: 'Receive instant alerts & evidence on Telegram.', icon: <Zap className="w-6 h-6 text-orange-500" /> }
               ].map((step) => (
                 <div key={step.id} className="relative group">
                   <div className="w-20 h-20 mx-auto bg-white rounded-full flex items-center justify-center border-4 border-white shadow-lg relative z-10 group-hover:scale-110 transition-transform duration-300">
@@ -499,47 +481,59 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
         </div>
       </section>
 
-      {/* Pricing Section (Simplified - 2 Tiers) */}
+      {/* Pricing Section - Specific Content Updates */}
       <section id="pricing" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-20">
-             <h2 className="text-3xl md:text-4xl font-extrabold text-dark mb-4">Simple, Transparent Pricing</h2>
-             <p className="text-lg text-slate-500">Choose the plan that fits your community's needs.</p>
+             <h2 className="text-3xl md:text-4xl font-extrabold text-dark mb-4">Pricing & Packages</h2>
+             <p className="text-lg text-slate-500">Flexible options for every scale.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-             {/* Starter */}
+             {/* Basic Plan */}
              <div className="p-8 rounded-3xl border border-slate-200 bg-white hover:border-slate-300 transition-colors flex flex-col">
-                <h3 className="text-xl font-bold text-slate-900">Community Starter</h3>
-                <div className="my-6">
-                    <span className="text-4xl font-extrabold text-slate-900">Free</span>
-                    <span className="text-slate-500"> / Forever</span>
+                <h3 className="text-xl font-bold text-slate-900">Basic Plan</h3>
+                <p className="text-sm text-slate-500 mb-6">SMEs, Single Factories, Residential Areas</p>
+                
+                <div className="my-4">
+                    <span className="text-2xl font-bold text-slate-900">Affordable</span>
+                    <p className="text-xs text-slate-400">Easy to Deploy</p>
                 </div>
-                <p className="text-sm text-slate-500 mb-8 h-10">Perfect for individuals or small communities to report incidents manually.</p>
-                <button className="w-full py-3 border-2 border-slate-200 rounded-xl font-bold text-slate-600 hover:border-slate-400 hover:text-slate-900 transition-all mt-auto">Sign Up Free</button>
-                <div className="mt-8 space-y-4">
-                    <div className="flex items-center gap-3 text-sm text-slate-600"><CheckCircle size={16} className="text-primary"/> Manual Incident Reporting</div>
-                    <div className="flex items-center gap-3 text-sm text-slate-600"><CheckCircle size={16} className="text-primary"/> Public Pollution Map</div>
-                    <div className="flex items-center gap-3 text-sm text-slate-600"><CheckCircle size={16} className="text-primary"/> Email Alerts (15m Delay)</div>
+                
+                <div className="mt-4 space-y-4 mb-8 flex-1">
+                    <div className="flex items-center gap-3 text-sm text-slate-600"><CheckCircle size={16} className="text-primary"/> <strong>&lt; 50 Cameras</strong></div>
+                    <div className="flex items-center gap-3 text-sm text-slate-600"><CheckCircle size={16} className="text-primary"/> Fire/Smoke & Illegal Waste Burning Detection</div>
+                    <div className="flex items-center gap-3 text-sm text-slate-600"><CheckCircle size={16} className="text-primary"/> Real-time Telegram Alerts</div>
+                    <div className="flex items-center gap-3 text-sm text-slate-600"><CheckCircle size={16} className="text-primary"/> Event Logging & Standard Video Proof Storage</div>
                 </div>
+
+                <button className="w-full py-3 bg-green-50 text-green-700 border border-green-200 rounded-xl font-bold hover:bg-green-100 transition-all mt-auto">
+                    Start Basic Plan
+                </button>
              </div>
 
-             {/* Smart District (Highlighted) */}
+             {/* Pro Plan */}
              <div className="p-8 rounded-3xl border-2 border-primary bg-white shadow-2xl relative transform md:-translate-y-4 flex flex-col">
-                <div className="absolute top-0 right-0 left-0 bg-primary text-white text-xs font-bold text-center py-2 rounded-t-2xl uppercase tracking-wider">Most Popular</div>
-                <h3 className="text-xl font-bold text-slate-900 mt-4">Smart District</h3>
-                <div className="my-6">
-                    <span className="text-4xl font-extrabold text-slate-900">$49</span>
-                    <span className="text-slate-500"> / month</span>
+                <div className="absolute top-0 right-0 left-0 bg-primary text-white text-xs font-bold text-center py-2 rounded-t-2xl uppercase tracking-wider">Recommended</div>
+                <h3 className="text-xl font-bold text-slate-900 mt-4">Pro Plan</h3>
+                <p className="text-sm text-slate-500 mb-6">Industrial Zones, Smart Cities, Major Infrastructure</p>
+                
+                <div className="my-4">
+                    <span className="text-2xl font-bold text-slate-900">Enterprise Pricing</span>
+                    <p className="text-xs text-slate-400">For Large Scale & Distributed Architecture</p>
                 </div>
-                <p className="text-sm text-green-600 font-bold italic mb-8 h-10 flex items-center gap-1"><CheckCircle size={14}/> 7-Day Free Trial. No credit card required.</p>
-                <button className="w-full py-3 bg-primary hover:bg-primaryDark text-white rounded-xl font-bold transition-all shadow-lg shadow-primary/30 mt-auto">Start Free Trial</button>
-                <div className="mt-8 space-y-4">
-                    <div className="flex items-center gap-3 text-sm text-slate-700 font-medium"><CheckCircle size={16} className="text-primary"/> Up to 5 AI Cameras</div>
-                    <div className="flex items-center gap-3 text-sm text-slate-700 font-medium"><CheckCircle size={16} className="text-primary"/> Real-time Telegram Alerts</div>
-                    <div className="flex items-center gap-3 text-sm text-slate-700 font-medium"><CheckCircle size={16} className="text-primary"/> Basic Analytics Dashboard</div>
-                    <div className="flex items-center gap-3 text-sm text-slate-700 font-medium"><CheckCircle size={16} className="text-primary"/> Standard Support</div>
+
+                <div className="mt-4 space-y-4 mb-8 flex-1">
+                    <div className="flex items-center gap-3 text-sm text-slate-700 font-medium"><CheckCircle size={16} className="text-primary"/> <strong>Unlimited Cameras</strong></div>
+                    <div className="flex items-center gap-3 text-sm text-slate-700 font-medium"><CheckCircle size={16} className="text-primary"/> Deep Analytics & Reports (By Area, Time, Risk)</div>
+                    <div className="flex items-center gap-3 text-sm text-slate-700 font-medium"><CheckCircle size={16} className="text-primary"/> Custom Dashboard & Multi-channel Alerts</div>
+                    <div className="flex items-center gap-3 text-sm text-slate-700 font-medium"><CheckCircle size={16} className="text-primary"/> API Integration (GIS, Urban Management)</div>
+                    <div className="flex items-center gap-3 text-sm text-slate-700 font-medium"><CheckCircle size={16} className="text-primary"/> User Role Management (Decentralized)</div>
                 </div>
+                
+                <button className="w-full py-3 bg-primary hover:bg-primaryDark text-white rounded-xl font-bold transition-all shadow-lg shadow-primary/30 mt-auto">
+                    Contact Sales for Enterprise
+                </button>
              </div>
           </div>
         </div>
@@ -550,13 +544,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl font-extrabold text-dark mb-4">What Our Partners Say</h2>
-                <p className="text-slate-500">Hear from cities and organizations benefiting from Clean-Air Sentinel.</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                 {[
-                    { name: 'Jane Doe', role: 'Mayor, Green City', img: 'https://i.pravatar.cc/150?img=1', text: "Clean-Air Sentinel has revolutionized how we monitor industrial zones. Response times have dropped by 80%." },
-                    { name: 'John Smith', role: 'Head of Environment, EcoTown', img: 'https://i.pravatar.cc/150?img=2', text: "The AI detection is incredibly accurate. We've significantly reduced illegal waste burning in just 3 months." }
+                    { name: 'Jane Doe', role: 'Mayor, Green City', img: 'https://placehold.co/150x150/e2e8f0/94a3b8?text=Jane', text: "Clean-Air Sentinel has revolutionized how we monitor industrial zones. Response times have dropped by 80%." },
+                    { name: 'John Smith', role: 'Head of Environment', img: 'https://placehold.co/150x150/e2e8f0/94a3b8?text=John', text: "The AI detection is incredibly accurate. We've significantly reduced illegal waste burning in just 3 months." }
                 ].map((item, idx) => (
                     <div key={idx} className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative">
                         <Quote className="absolute top-6 right-6 text-slate-100 w-12 h-12" fill="currentColor"/>
@@ -578,15 +571,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
       <section id="team" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-extrabold text-dark mb-4">Meet the Minds Behind Clean-Air Sentinel</h2>
-                <p className="text-slate-500">Dedicated to protecting our urban environment through advanced AI technology.</p>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-dark mb-4">Meet the Team</h2>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
                 {[
-                    { name: 'Đức Dũng', role: 'Team Lead & AI Architect', img: 'https://i.pravatar.cc/300?img=11', desc: 'Leading the vision for smart city integration.' },
-                    { name: 'Thành Hiệu', role: 'Frontend Engineer & UI/UX', img: 'https://i.pravatar.cc/300?img=12', desc: 'Crafting intuitive interfaces for complex data.' },
-                    { name: 'Kỳ Duyên', role: 'Backend Developer & Data Analyst', img: 'https://i.pravatar.cc/300?img=5', desc: 'Optimizing real-time data processing pipelines.' }
+                    { name: 'Đức Dũng', role: 'Team Lead & AI Architect', img: 'https://placehold.co/300x300/e2e8f0/94a3b8?text=Dung', desc: 'Leading the vision for smart city integration.' },
+                    { name: 'Thành Hiệu', role: 'Frontend Engineer & UI/UX', img: 'https://placehold.co/300x300/e2e8f0/94a3b8?text=Hieu', desc: 'Crafting intuitive interfaces for complex data.' },
+                    { name: 'Kỳ Duyên', role: 'Backend Developer & Data Analyst', img: 'https://placehold.co/300x300/e2e8f0/94a3b8?text=Duyen', desc: 'Optimizing real-time data processing pipelines.' }
                 ].map((member, idx) => (
                     <div key={idx} className="flex flex-col items-center text-center group">
                         <div className="w-32 h-32 rounded-full overflow-hidden mb-6 border-4 border-slate-50 shadow-lg group-hover:scale-105 transition-transform duration-300">
@@ -602,165 +594,82 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
         </div>
       </section>
 
-      {/* Contact Section (Lead Gen) */}
-      <section id="contact" className="py-24 bg-slate-50 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-30 pointer-events-none">
-             <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
-             <div className="absolute top-1/2 right-0 w-64 h-64 bg-blue-100 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden flex flex-col md:flex-row">
-                {/* Left: Value Prop */}
-                <div className="p-10 md:p-14 md:w-5/12 bg-dark text-white flex flex-col justify-center">
-                    <h2 className="text-3xl font-extrabold mb-6">Ready to Clear the Air?</h2>
-                    <p className="text-slate-300 mb-8 leading-relaxed">Join the network of smart cities today. Get a <strong className="text-primary">Free Urban Air Analysis Report</strong> for your district when you reach out.</p>
-                    <ul className="space-y-4">
-                        <li className="flex items-center gap-3 text-sm font-medium"><CheckCircle className="text-primary w-5 h-5"/> Instant Setup</li>
-                        <li className="flex items-center gap-3 text-sm font-medium"><CheckCircle className="text-primary w-5 h-5"/> 24/7 Monitoring</li>
-                        <li className="flex items-center gap-3 text-sm font-medium"><CheckCircle className="text-primary w-5 h-5"/> Cost Effective</li>
-                    </ul>
+      {/* Contact Section */}
+      <section id="contact" className="py-24 bg-slate-50 border-t border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+                {/* Contact Text */}
+                <div>
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-dark mb-6">Ready to Clean Up Your City?</h2>
+                    <p className="text-lg text-slate-500 mb-8 leading-relaxed">
+                        Join the growing network of smart cities using AI to protect their citizens. Schedule a demo or talk to our experts today.
+                    </p>
+                    
+                    <div className="space-y-6">
+                        <div className="flex items-start gap-4">
+                            <div className="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
+                                <Mail className="w-6 h-6 text-primary" />
+                            </div>
+                            <div>
+                                <h4 className="font-bold text-slate-900">Email Us</h4>
+                                <p className="text-slate-500">support@cleanair.ai</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-4">
+                            <div className="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
+                                <Phone className="w-6 h-6 text-primary" />
+                            </div>
+                            <div>
+                                <h4 className="font-bold text-slate-900">Call Us</h4>
+                                <p className="text-slate-500">+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-4">
+                            <div className="bg-white p-3 rounded-xl shadow-sm border border-slate-100">
+                                <MapPinIcon className="w-6 h-6 text-primary" />
+                            </div>
+                            <div>
+                                <h4 className="font-bold text-slate-900">Visit HQ</h4>
+                                <p className="text-slate-500">123 Green Tech Blvd, Silicon Valley, CA</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Right: Form */}
-                <div className="p-10 md:p-14 md:w-7/12">
+                {/* Contact Form */}
+                <div className="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 lg:p-10">
                     <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-2">Full Name</label>
-                            <input type="text" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" placeholder="John Doe" />
+                            <input 
+                                type="text" 
+                                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all" 
+                                placeholder="John Doe" 
+                            />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">Work Email <span className="text-red-500">*</span></label>
-                            <input type="email" required className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" placeholder="john@city.gov" />
+                            <label className="block text-sm font-medium text-slate-700 mb-2">Work Email</label>
+                            <input 
+                                type="email" 
+                                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all" 
+                                placeholder="john@company.com" 
+                            />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">Organization / City Name</label>
-                            <input type="text" className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all" placeholder="Department of Environment" />
+                            <label className="block text-sm font-medium text-slate-700 mb-2">Message</label>
+                            <textarea 
+                                rows={4} 
+                                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all resize-none" 
+                                placeholder="Tell us about your city's needs..."
+                            ></textarea>
                         </div>
-                        <button className="w-full py-4 bg-primary hover:bg-primaryDark text-white font-bold rounded-xl shadow-lg shadow-primary/30 transition-all transform hover:-translate-y-0.5 mt-2">
-                            Get My Free Report
+                        <button className="w-full py-4 bg-primary hover:bg-primaryDark text-white font-bold rounded-xl shadow-lg hover:shadow-primary/30 transition-all flex items-center justify-center gap-2 transform hover:-translate-y-1">
+                            <Send size={18} />
+                            Send Message
                         </button>
                     </form>
                 </div>
             </div>
-        </div>
-      </section>
-
-      {/* Advanced Feedback Section (With Branching Logic) */}
-      <section className="py-12 bg-white border-t border-slate-100">
-        <div className="max-w-xl mx-auto px-4 text-center">
-            <h3 className="text-lg font-bold text-dark mb-2">Help us improve</h3>
-            
-            {!feedbackSubmitted ? (
-                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 shadow-sm transition-all duration-300">
-                    <p className="text-slate-500 mb-6 text-sm">How relevant is this solution to your city?</p>
-                    
-                    {/* Emoji Selectors */}
-                    <div className="flex justify-center gap-8 mb-6">
-                        {['😡', '😐', '🤩'].map((emoji) => (
-                            <button 
-                                key={emoji}
-                                onClick={() => handleEmojiClick(emoji)}
-                                className={`text-4xl transition-transform duration-200 transform hover:scale-110 ${
-                                    feedbackRating === emoji ? 'scale-125 grayscale-0' : 'grayscale hover:grayscale-0 opacity-70 hover:opacity-100'
-                                }`}
-                            >
-                                {emoji}
-                            </button>
-                        ))}
-                    </div>
-
-                    {/* Conditional Rendering Based on Feedback */}
-                    {feedbackRating === '🤩' && (
-                       // Positive Feedback Flow
-                       <div className="text-left space-y-4 animate-fade-in-up pt-4 border-t border-slate-200">
-                           {/* Star Rating */}
-                           <div className="flex flex-col items-center gap-2 mb-4">
-                              <p className="text-sm font-semibold text-slate-700">Rate your experience:</p>
-                              <div className="flex gap-2">
-                                {[1, 2, 3, 4, 5].map((star) => (
-                                  <button key={star} onClick={() => setStarRating(star)} className="focus:outline-none transition-transform hover:scale-110">
-                                    <Star 
-                                      size={28} 
-                                      className={`${star <= starRating ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'} transition-colors`} 
-                                    />
-                                  </button>
-                                ))}
-                              </div>
-                           </div>
-
-                           {/* Positive Tags */}
-                           <div>
-                              <p className="text-sm font-semibold text-slate-700 mb-2">What did you like most?</p>
-                              <div className="flex flex-wrap gap-2">
-                                {['Accurate Detection', 'Fast Alerts', 'Easy to Use', 'Dashboard UI'].map((tag) => (
-                                  <button 
-                                    key={tag}
-                                    onClick={() => toggleTag(tag)}
-                                    className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
-                                      selectedTags.includes(tag) 
-                                        ? 'bg-primary text-white border-primary shadow-sm' 
-                                        : 'bg-white text-slate-600 border-slate-200 hover:border-primary'
-                                    }`}
-                                  >
-                                    {tag}
-                                  </button>
-                                ))}
-                              </div>
-                           </div>
-
-                           <textarea 
-                                placeholder="Tell us more about what you loved..." 
-                                className="w-full text-sm p-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none h-24 resize-none bg-white placeholder-slate-400"
-                           ></textarea>
-                           <button 
-                                onClick={() => setFeedbackSubmitted(true)}
-                                className="w-full py-3 bg-primary text-white font-bold rounded-xl hover:bg-primaryDark transition-colors shadow-lg shadow-primary/30"
-                           >
-                               Send Love
-                           </button>
-                       </div>
-                    )}
-
-                    {(feedbackRating === '😡' || feedbackRating === '😐') && (
-                        // Negative/Neutral Feedback Flow
-                        <div className="text-left space-y-4 animate-fade-in-up pt-4 border-t border-slate-200">
-                            <p className="text-sm font-semibold text-slate-700">Tell us what went wrong:</p>
-                            <div className="grid grid-cols-2 gap-3">
-                                {[
-                                    {id: 'price', label: 'Pricing Concern'},
-                                    {id: 'clarity', label: 'Hard to Understand'},
-                                    {id: 'features', label: 'Missing Features'},
-                                    {id: 'other', label: 'Other'}
-                                ].map(item => (
-                                    <label key={item.id} className="flex items-center gap-2 text-sm text-slate-600 cursor-pointer bg-white p-2 rounded border border-slate-200 hover:border-primary transition-colors">
-                                        <input type="checkbox" className="rounded text-primary focus:ring-primary border-gray-300" />
-                                        {item.label}
-                                    </label>
-                                ))}
-                            </div>
-                            <textarea 
-                                placeholder="How can we improve?" 
-                                className="w-full text-sm p-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none h-24 resize-none bg-white placeholder-slate-400"
-                            ></textarea>
-                            <button 
-                                onClick={() => setFeedbackSubmitted(true)}
-                                className="w-full py-3 bg-dark text-white font-bold rounded-xl hover:bg-slate-800 transition-colors shadow-lg"
-                            >
-                                Send Feedback
-                            </button>
-                        </div>
-                    )}
-                </div>
-            ) : (
-                <div className="bg-green-50 p-8 rounded-2xl border border-green-100 animate-fade-in-up">
-                    <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
-                        🎉
-                    </div>
-                    <h4 className="text-xl font-bold text-green-800 mb-2">Thank You!</h4>
-                    <p className="text-green-700">Your feedback helps us build a better Sentinel.</p>
-                </div>
-            )}
         </div>
       </section>
 
@@ -776,29 +685,21 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
               <p className="text-sm text-slate-500 leading-relaxed mb-4">
                 Empowering cities with AI-driven environmental surveillance. Detect, Report, Resolve.
               </p>
-              <div className="flex gap-4">
-                 <a href="#" className="text-slate-400 hover:text-primary"><Linkedin size={20}/></a>
-                 <a href="#" className="text-slate-400 hover:text-primary"><Globe size={20}/></a>
-              </div>
             </div>
             
             <div>
               <h4 className="font-bold text-slate-900 mb-4">Platform</h4>
               <ul className="space-y-2 text-sm text-slate-500">
-                <li><a href="#" className="hover:text-primary">Live Monitoring</a></li>
-                <li><a href="#" className="hover:text-primary">Incident Reporting</a></li>
-                <li><a href="#" className="hover:text-primary">Data Analytics</a></li>
-                <li><a href="#" className="hover:text-primary">API Docs</a></li>
+                <li><button onClick={() => scrollToSection('features')} className="hover:text-primary text-left">Live Monitoring</button></li>
+                <li><button onClick={() => scrollToSection('features')} className="hover:text-primary text-left">Incident Reporting</button></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-bold text-slate-900 mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-slate-500">
-                <li><a href="#" className="hover:text-primary">About Us</a></li>
-                <li><a href="#" className="hover:text-primary">Careers</a></li>
+                <li><button onClick={() => scrollToSection('team')} className="hover:text-primary text-left">About Us</button></li>
                 <li><a href="#" className="hover:text-primary">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-primary">Terms of Service</a></li>
               </ul>
             </div>
             
@@ -807,7 +708,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
               <ul className="space-y-2 text-sm text-slate-500">
                 <li className="flex items-center gap-2"><Mail size={16}/> support@cleanair.ai</li>
                 <li className="flex items-center gap-2"><Phone size={16}/> +1 (555) 123-4567</li>
-                <li className="flex items-center gap-2"><Map size={16}/> 123 Innovation Dr, Tech City</li>
               </ul>
             </div>
           </div>

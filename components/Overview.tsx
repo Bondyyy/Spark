@@ -128,7 +128,7 @@ const Overview: React.FC = () => {
             <div className="absolute inset-0 bg-slate-900 rounded-xl overflow-hidden border border-slate-800 z-0">
                 {/* Background Image with Opacity */}
                 <img 
-                  src="https://images.unsplash.com/photo-1549007996-f9f381048674?q=80&w=1470" 
+                  src="https://placehold.co/1470x800/0F172A/FFFFFF?text=Command+Center+Map+Visual"
                   alt="Command Center Map" 
                   className="absolute inset-0 w-full h-full object-cover opacity-40 grayscale hover:grayscale-0 transition-all duration-700"
                 />
