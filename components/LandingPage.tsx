@@ -496,8 +496,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
                 <p className="text-sm text-slate-500 mb-6">SMEs, Single Factories, Residential Areas</p>
                 
                 <div className="my-4">
-                    <span className="text-2xl font-bold text-slate-900">Affordable</span>
-                    <p className="text-xs text-slate-400">Easy to Deploy</p>
+                    <span className="text-4xl font-bold text-slate-900">Free</span>
+                    <p className="text-sm text-slate-500 font-medium mt-1">Forever free for small zones</p>
                 </div>
                 
                 <div className="mt-4 space-y-4 mb-8 flex-1">
@@ -508,7 +508,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
                 </div>
 
                 <button className="w-full py-3 bg-green-50 text-green-700 border border-green-200 rounded-xl font-bold hover:bg-green-100 transition-all mt-auto">
-                    Start Basic Plan
+                    Start for Free
                 </button>
              </div>
 
@@ -519,8 +519,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
                 <p className="text-sm text-slate-500 mb-6">Industrial Zones, Smart Cities, Major Infrastructure</p>
                 
                 <div className="my-4">
-                    <span className="text-2xl font-bold text-slate-900">Enterprise Pricing</span>
-                    <p className="text-xs text-slate-400">For Large Scale & Distributed Architecture</p>
+                    <div className="flex items-baseline gap-1">
+                        <span className="text-4xl font-bold text-slate-900">$49</span>
+                        <span className="text-lg text-slate-500 font-medium">/ month</span>
+                    </div>
+                    <p className="text-sm text-slate-500 font-medium mt-1">Billed annually</p>
                 </div>
 
                 <div className="mt-4 space-y-4 mb-8 flex-1">
@@ -532,7 +535,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
                 </div>
                 
                 <button className="w-full py-3 bg-primary hover:bg-primaryDark text-white rounded-xl font-bold transition-all shadow-lg shadow-primary/30 mt-auto">
-                    Contact Sales for Enterprise
+                    Subscribe Now
                 </button>
              </div>
           </div>
