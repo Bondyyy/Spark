@@ -5,30 +5,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CLEAN-AIR SENTINEL</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              primary: '#10B981', // Eco-Green
-              primaryDark: '#059669',
-              secondary: '#F9FAFB', // Light Gray
-              warning: '#F59E0B', // Warning Orange
-              danger: '#EF4444', // Danger Red
+              primary: '#10B981', // Emerald 500
+              primaryDark: '#047857', // Emerald 700
+              primaryLight: '#D1FAE5', // Emerald 100
+              secondary: '#64748B', // Slate 500
+              dark: '#0F172A', // Slate 900
+              light: '#F8FAFC', // Slate 50
+              surface: '#FFFFFF',
+              warning: '#F59E0B', 
+              danger: '#EF4444',
             },
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
             },
+            animation: {
+              'blob': 'blob 7s infinite',
+              'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
+            },
+            keyframes: {
+              blob: {
+                '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                '100%': { transform: 'translate(0px, 0px) scale(1)' },
+              },
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              }
+            }
           },
         },
       }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+      html {
+        scroll-behavior: smooth;
+      }
       body {
         font-family: 'Inter', sans-serif;
+        background-color: #F8FAFC;
       }
-      /* Custom scrollbar for dashboard */
+      
+      /* Glassmorphism Utilities */
+      .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      
+      .glass-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+      }
+
+      /* Glowing Border Box Effect */
+      .glowing-border-box {
+        position: relative;
+        overflow: hidden;
+        border-radius: 20px;
+        z-index: 0;
+        /* Ensure content sits nicely inside */
+      }
+
+      .glowing-border-box::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 150%;
+        height: 150%;
+        background: conic-gradient(
+          transparent 270deg,
+          #D1FAE5, /* primaryLight */
+          #10B981, /* primary */
+          transparent
+        );
+        transform: translate(-50%, -50%);
+        animation: border-rotate 4s linear infinite;
+        z-index: -2;
+      }
+
+      .glowing-border-box::after {
+        content: '';
+        position: absolute;
+        inset: 2px; /* Border thickness */
+        background: #F8FAFC; /* Match body bg (light) */
+        border-radius: 18px; /* Slightly smaller than parent */
+        z-index: -1;
+      }
+
+      @keyframes border-rotate {
+        from {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      /* Map Marker & Smart Tooltip Logic */
+      .map-marker {
+        position: absolute;
+        z-index: 10;
+        cursor: pointer;
+      }
+
+      .map-marker:hover {
+        z-index: 100 !important; /* Bring marker to front */
+      }
+
+      /* Base Tooltip Style */
+      .marker-tooltip {
+        position: absolute;
+        left: 50%;
+        width: 240px; /* Fixed width to prevent squashing */
+        
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 9999 !important; /* Super high z-index to overflow containers */
+
+        /* DEFAULT: Appear ABOVE the marker */
+        bottom: 100%; 
+        margin-bottom: 14px; /* Gap from marker */
+        transform: translateX(-50%) translateY(10px);
+      }
+
+      /* Hover state for default tooltip */
+      .map-marker:hover .marker-tooltip {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* --- TOOLTIP ARROW --- */
+      .tooltip-arrow {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+        width: 12px;
+        height: 12px;
+        background-color: rgb(15 23 42 / 0.95); /* Matches slate-900/95 backdrop */
+        
+        /* Default Arrow: At bottom pointing down */
+        bottom: -6px;
+        border-right: 1px solid rgb(51 65 85); /* Slate 700 border */
+        border-bottom: 1px solid rgb(51 65 85);
+      }
+
+      /* Custom scrollbar */
       ::-webkit-scrollbar {
         width: 8px;
         height: 8px;

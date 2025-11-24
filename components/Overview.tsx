@@ -1,8 +1,52 @@
 import React from 'react';
-import { Video, AlertTriangle, Activity, CheckCircle, MapPin } from 'lucide-react';
+import { Video, AlertTriangle, Activity, MapPin, Signal, Wifi, WifiOff } from 'lucide-react';
 import { RECENT_ALERTS } from '../constants';
 
 const Overview: React.FC = () => {
+  // Mock data for map markers
+  const mapMarkers = [
+    { 
+      id: 'M1', 
+      top: '30%', 
+      left: '25%', 
+      location: 'Park Zone A', 
+      status: 'alert', 
+      type: 'Smoke',
+      cameraId: 'CAM-01', 
+      time: '10:42 AM' 
+    },
+    { 
+      id: 'M2', 
+      top: '45%', 
+      left: '60%', 
+      location: 'Industrial Gate 4', 
+      status: 'active', 
+      type: 'Monitoring',
+      cameraId: 'CAM-02', 
+      time: 'Live' 
+    },
+    { 
+      id: 'M3', 
+      top: '75%', 
+      left: '45%', 
+      location: 'Residential Block C', 
+      status: 'active', 
+      type: 'Monitoring',
+      cameraId: 'CAM-03', 
+      time: 'Live' 
+    },
+    { 
+      id: 'M4', 
+      top: '20%', 
+      left: '80%', 
+      location: 'Waste Facility', 
+      status: 'offline', 
+      type: 'Offline',
+      cameraId: 'CAM-04', 
+      time: 'Offline' 
+    },
+  ];
+
   return (
     <div className="space-y-6">
       {/* Stats Cards */}
@@ -70,32 +114,106 @@ const Overview: React.FC = () => {
           </div>
         </div>
 
-        {/* Mini Map Placeholder */}
+        {/* Command Center Map / Monitored Zones */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col">
           <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
             <MapPin className="w-5 h-5 text-gray-400" />
-            Monitored Zones
+            Command Center Map
           </h3>
-          <div className="flex-1 bg-slate-100 rounded-lg relative overflow-hidden group min-h-[200px]">
-            {/* Abstract Map Graphic */}
-            <div className="absolute inset-0 opacity-20" style={{
-                backgroundImage: 'radial-gradient(#cbd5e1 2px, transparent 2px)',
-                backgroundSize: '20px 20px'
-            }}></div>
+          
+          {/* Map Container - Reorganized for Overflow Handling */}
+          <div className="flex-1 relative min-h-[350px]">
             
-            {/* Map Points */}
-            <div className="absolute top-1/3 left-1/4 w-3 h-3 bg-primary rounded-full animate-pulse shadow-lg ring-4 ring-primary/20">
-              <div className="absolute -top-8 -left-8 bg-white px-2 py-1 rounded shadow text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Zone A</div>
-            </div>
-            <div className="absolute top-1/2 right-1/3 w-3 h-3 bg-red-500 rounded-full animate-ping shadow-lg"></div>
-            <div className="absolute top-1/2 right-1/3 w-3 h-3 bg-red-500 rounded-full shadow-lg ring-4 ring-red-500/20">
-               <div className="absolute -top-8 -right-8 bg-white px-2 py-1 rounded shadow text-xs font-bold whitespace-nowrap text-red-600 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Alert!</div>
-            </div>
-            <div className="absolute bottom-1/4 left-1/3 w-3 h-3 bg-primary rounded-full shadow-lg"></div>
+            {/* 1. Background Layer (Clipped for Border Radius) */}
+            <div className="absolute inset-0 bg-slate-900 rounded-xl overflow-hidden border border-slate-800 z-0">
+                {/* Background Image with Opacity */}
+                <img 
+                  src="https://images.unsplash.com/photo-1549007996-f9f381048674?q=80&w=1470" 
+                  alt="Command Center Map" 
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 grayscale hover:grayscale-0 transition-all duration-700"
+                />
+                {/* Tech Grid Overlay */}
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,0.05)_1px,transparent_1px)] bg-[size:30px_30px] pointer-events-none"></div>
+                
+                {/* Live Indicator (Inside clipped area) */}
+                <div className="absolute top-3 left-3 bg-red-600/90 text-white text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1.5 shadow-lg pointer-events-none z-10">
+                    <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
+                    LIVE MAP
+                </div>
 
-            <div className="absolute bottom-2 right-2 bg-white/90 px-2 py-1 text-[10px] rounded shadow text-gray-500">
-              Hanoi, VN
+                {/* Map Legend (Inside clipped area) */}
+                <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md px-3 py-2 rounded-lg border border-white/10 text-[10px] text-slate-300 flex flex-col gap-1.5 z-10 pointer-events-none">
+                    <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-primary shadow shadow-primary/50"></span> Active Monitoring
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-red-500 shadow shadow-red-500/50"></span> Incident Alert
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-slate-500"></span> Camera Offline
+                    </div>
+                </div>
             </div>
+
+            {/* 2. Marker Layer (Unclipped/Visible Overflow) */}
+            <div className="absolute inset-0 z-20 pointer-events-none overflow-visible">
+                {/* Interactive Markers */}
+                {mapMarkers.map((marker) => (
+                  <div 
+                    key={marker.id}
+                    className="map-marker group pointer-events-auto"
+                    style={{ top: marker.top, left: marker.left }}
+                  >
+                    {/* Pulse Animation for Alerts */}
+                    {marker.status === 'alert' && (
+                      <div className="absolute -inset-4 bg-red-500/30 rounded-full animate-ping pointer-events-none"></div>
+                    )}
+
+                    {/* The Dot Marker */}
+                    <div className={`relative w-4 h-4 rounded-full border-2 border-white shadow-[0_0_15px_rgba(0,0,0,0.5)] transform transition-all duration-300 group-hover:scale-125 ${
+                      marker.status === 'alert' ? 'bg-red-500 shadow-red-500/50' : 
+                      marker.status === 'active' ? 'bg-primary shadow-primary/50' : 'bg-slate-500'
+                    }`}></div>
+
+                    {/* Tooltip Card - Always on top, can overflow */}
+                    <div className="marker-tooltip bg-slate-900/95 backdrop-blur-md text-white rounded-lg shadow-2xl border border-slate-700 pointer-events-none">
+                      
+                      {/* Tooltip Header */}
+                      <div className={`px-3 py-2 border-b border-white/10 flex justify-between items-center rounded-t-lg ${
+                        marker.status === 'alert' ? 'bg-red-500/20' : ''
+                      }`}>
+                        <span className="font-bold text-sm truncate">{marker.location}</span>
+                        {marker.status === 'alert' && <AlertTriangle size={14} className="text-red-500 animate-pulse" />}
+                        {marker.status === 'active' && <Signal size={14} className="text-primary" />}
+                        {marker.status === 'offline' && <WifiOff size={14} className="text-slate-400" />}
+                      </div>
+
+                      {/* Tooltip Body (Mini Table) */}
+                      <div className="p-3">
+                        <div className="grid grid-cols-[auto,1fr] gap-x-3 gap-y-2 text-xs">
+                            <span className="text-slate-400">Status:</span>
+                            <span className={`font-bold ${
+                              marker.status === 'alert' ? 'text-red-400' : 
+                              marker.status === 'active' ? 'text-primary' : 'text-slate-400'
+                            }`}>
+                              {marker.status === 'alert' ? `${marker.type} Detected` : marker.type}
+                            </span>
+
+                            <span className="text-slate-400">Camera ID:</span>
+                            <span className="text-slate-200 font-mono">{marker.cameraId}</span>
+
+                            <span className="text-slate-400">Time:</span>
+                            <span className="text-slate-200">{marker.time}</span>
+                        </div>
+                      </div>
+
+                      {/* Tooltip Arrow */}
+                      <div className="tooltip-arrow"></div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
           </div>
         </div>
       </div>

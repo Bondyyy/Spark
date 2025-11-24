@@ -21,9 +21,11 @@ export interface ChartData {
   name: string;
   value: number;
   fill?: string;
+  [key: string]: any;
 }
 
 export interface WeeklyData {
   day: string;
   alerts: number;
+  [key: string]: any;
 }

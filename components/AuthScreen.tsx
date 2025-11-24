@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShieldCheck, Mail, Lock, User, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Mail, Lock, User, ArrowRight, ArrowLeft } from 'lucide-react';
 
 interface AuthScreenProps {
   onAuthenticated: () => void;
@@ -18,7 +18,16 @@ const AuthScreen: React.FC<AuthScreenProps> = ({ onAuthenticated, onBack }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative">
+      {/* Back to Home Button */}
+      <button 
+        onClick={onBack}
+        className="absolute top-5 left-5 md:top-8 md:left-8 flex items-center gap-2 text-slate-500 hover:text-primary transition-colors group z-50"
+      >
+        <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
+        <span className="font-medium hidden sm:inline">Back to Home</span>
+      </button>
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center cursor-pointer" onClick={onBack}>
           <div className="bg-primary/10 p-3 rounded-xl">

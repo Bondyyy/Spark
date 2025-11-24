@@ -57,12 +57,15 @@ const Settings: React.FC = () => {
 
       {/* Camera Management */}
       <section className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="p-6 border-b border-gray-100 flex items-center gap-3">
-            <div className="bg-green-50 p-2 rounded-lg">
-                <Camera className="text-green-600 w-5 h-5" />
-            </div>
-            <div className="flex-1">
-                <h3 className="font-bold text-gray-800">Camera Setup</h3>
+        <div className="p-6 border-b border-gray-100 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+                <div className="bg-green-50 p-2 rounded-lg">
+                    <Camera className="text-green-600 w-5 h-5" />
+                </div>
+                <div>
+                    <h3 className="font-bold text-gray-800">Camera Setup</h3>
+                    <p className="text-xs text-slate-500">Cameras: <span className="font-semibold text-slate-700">4 / 50</span> (Basic Plan Limit)</p>
+                </div>
             </div>
             <button className="text-sm text-primary font-medium hover:underline">+ Add Camera</button>
         </div>
