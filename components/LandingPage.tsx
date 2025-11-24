@@ -262,7 +262,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Hero Section - Refactored for Centered Layout */}
       <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
         {/* Background Elements */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] animate-blob"></div>
@@ -270,24 +270,22 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
-          {/* Glowing Border Box Container */}
-          <div className="glowing-border-box p-6 md:p-12 lg:p-16">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* Glowing Border Box Container - Now Centered */}
+          <div className="glowing-border-box p-8 md:p-16 max-w-5xl mx-auto">
+            <div className="flex flex-col items-center text-center animate-fade-in-up max-w-4xl mx-auto">
               
-              {/* Left Column: Text */}
-              <div className="text-center lg:text-left animate-fade-in-up">
                 <h1 className="text-5xl lg:text-7xl font-extrabold text-dark tracking-tight mb-6 leading-[1.1]">
-                  AI-Powered <br className="hidden lg:block"/>
+                  AI-Powered <br className="hidden md:block"/>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-600">
                     Illegal Waste Burning Detection
                   </span>
                 </h1>
                 
-                <p className="mt-4 text-xl text-slate-500 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                <p className="mt-6 text-xl text-slate-500 leading-relaxed max-w-2xl">
                   Protecting Urban Air Quality with Real-time Monitoring & Instant Telegram Alerts.
                 </p>
                 
-                <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center w-full">
                   <button 
                     onClick={onLogin}
                     className="px-8 py-4 bg-primary hover:bg-primaryDark text-white font-bold rounded-xl shadow-lg hover:shadow-primary/30 transition-all flex items-center justify-center gap-2"
@@ -304,27 +302,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
                   </button>
                 </div>
                 
-                <div className="mt-10 pt-8 border-t border-slate-200 flex items-center justify-center lg:justify-start gap-8 text-slate-400 grayscale opacity-70">
+                <div className="mt-12 pt-8 border-t border-slate-200 w-full max-w-2xl flex flex-wrap items-center justify-center gap-8 text-slate-400 grayscale opacity-70">
                    <div className="flex items-center gap-2"><ShieldCheck size={20}/> GovTech</div>
                    <div className="flex items-center gap-2"><Globe size={20}/> SmartCity</div>
                    <div className="flex items-center gap-2"><Server size={20}/> AWS Partner</div>
                 </div>
-              </div>
-
-              {/* Right Column: Visual (Static Image) */}
-              <div className="relative hidden lg:block h-full min-h-[500px] flex items-center justify-center">
-                  {/* Background Glow */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-primary/10 to-blue-100/30 rounded-full blur-3xl"></div>
-
-                  <div className="relative z-10 p-8">
-                      <img
-                          src="https://placehold.co/1200x600/10B981/FFFFFF?text=Clean+Air+Sentinel+Hero"
-                          alt="AI data processing"
-                          loading="lazy"
-                          className="w-full h-auto max-w-[600px] object-contain rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-500"
-                      />
-                  </div>
-              </div>
 
             </div>
           </div>
